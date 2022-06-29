@@ -1,0 +1,10 @@
+include LICENSE
+include README.md
+recursive-include niscal *.py
+
+recursive-exclude tests *
+recursive-exclude examples *
+recursive-exclude templates *
+
+exclude tox.ini
+exclude pyproject.toml
