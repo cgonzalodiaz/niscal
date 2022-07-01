@@ -3,8 +3,7 @@
 """
 @author: Gonzalo Diaz
 
-This is a first draft of NISCAL
-
+A first draft of NISCAL
 #-----------------------------------------
 #Telluric correction to the science spectrum              #
 #---------------------------------------------
