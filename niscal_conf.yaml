@@ -1,0 +1,150 @@
+---
+ wdir: "/PATH TO DATA/telluric_cor"  #Working directory
+ science_file: "xtfobj_comb.fits"
+ telluric_file: "xtftel_comb.fits"
+ name_sci: "StandardStar"
+ name_tel: "HD21875"
+ # Parameters for template matching
+ which_wav_scale: 21210.0 #wavelength to estimate the scale factor between templates and the telluric spectrum. 
+ minwav: 19890.0 # lower limit of the calibration wavelength range in angstroms 
+ maxwav: 23190.0 # upper limit of the calibration wavelength range in angstroms 
+ rvspeed: 170.0  # radial vlocity (in known)
+ rvwavmin: 20900.0 # lower limit of the wavelength range in angstroms for RV calculation
+ rvwavmax: 22700.0 # upper limit of the wavelength range in angstroms for RV calculation
+ min_wav_q: 21560   #lower limit wavelength in angstroms for the quality check
+ max_wav_q: 21750   #upper limit wavelength in angstroms for the quality check
+ # Parameters for flux calibration
+ fluxing: on
+ magnitude_sci: 10.909   #magnitude in 2MASS in the corresponding band
+ er_magnitude_sci: 0.023
+ magnitude_tel: 7.445   #magnitude in 2MASS in the corresponding band
+ er_magnitude_tel: 0.023
+ slit_width: 3   # Slit width in pixels for slit loss correction 
+ #slitloss_sci: 1.2  #20% percent of light loss
+ #slitloss_tel: 1.07  #some percent of light loss
+ fwhm_sci: 3.6 # FWHM  in pixels of PSF during observation for slit loss correction 
+ fwhm_tel: 3.8 # FWHM  in ixels of PSF during observation for slit loss correction 
+ # List and template selection
+ which_template: 19 #21 #number of the selected template for telluric corretion (starting in 1, 2, 3...)
+ template_list:
+  -
+   name: "HD105262"
+   sp_type: "B9" 
+   fits: "/templates/XSL_DR2/xsl_HD105262_B9_nir.fits"
+  -
+   name: "HD106304"
+   sp_type: "B9V" 
+   fits: "/templates/XSL_DR2/xsl_HD106304_B9V_nir.fits"
+  -
+   name: "HD117880"
+   sp_type: "B9IV-V" 
+   fits: "/templates/XSL_DR2/xsl_HD117880_B9IV-V_nir.fits"
+  -
+   name: "HD128801"
+   sp_type: "B9" 
+   fits: "/templates/XSL_DR2/xsl_HD128801_B9_nir.fits"
+  -
+   name: "HD130095"
+   sp_type: "B9V" 
+   fits: "/templates/XSL_DR2/xsl_HD130095_B9V_nir.fits"
+  -
+   name: "HD142703"
+   sp_type: "A2I-II" 
+   fits: "/templates/XSL_DR2/xsl_HD142703_A2I-II_nir.fits"
+  -
+   name: "HD143459"
+   sp_type: "A0V" 
+   fits: "/templates/XSL_DR2/xsl_HD143459_A0V_nir.fits"
+  -
+   name: "HD147550"
+   sp_type: "B9V" 
+   fits: "/templates/XSL_DR2/xsl_HD147550_B9V_nir.fits"
+  -
+   name: "HD161370"
+   sp_type: "A0" 
+   fits: "/templates/XSL_DR2/xsl_HD161370_A0_nir.fits"
+  -
+   name: "HD164257"
+   sp_type: "A0" 
+   fits: "/templates/XSL_DR2/xsl_HD164257_A0_nir.fits"
+  -
+   name: "HD164967"
+   sp_type: "A0" 
+   fits: "/templates/XSL_DR2/xsl_HD164967_A0_nir.fits"
+  -
+   name: "HD165887"
+   sp_type: "A2-3V" 
+   fits: "/templates/XSL_DR2/xsl_HD165887_A2-3V_nir.fits"
+  -
+   name: "HD166283"
+   sp_type: "A1V" 
+   fits: "/templates/XSL_DR2/xsl_HD166283_A1V_nir.fits"
+  -
+   name: "HD167946"
+   sp_type: "A0" 
+   fits: "/templates/XSL_DR2/xsl_HD167946_A0_nir.fits"
+  -
+   name: "HD169032"
+   sp_type: "A2" 
+   fits: "/templates/XSL_DR2/xsl_HD169032_A2_nir.fits"
+  -
+   name: "HD172522"
+   sp_type: "A2III" 
+   fits: "/templates/XSL_DR2/xsl_HD172522_A2III_nir.fits"
+  -
+   name: "HD173369"
+   sp_type: "A2" 
+   fits: "/templates/XSL_DR2/xsl_HD173369_A2_nir.fits"
+  -
+   name: "HD173669"
+   sp_type: "A0" 
+   fits: "/templates/XSL_DR2/xsl_HD173669_A0_nir.fits"
+  -
+   name: "HD174240"
+   sp_type: "A1IV" 
+   fits: "/templates/XSL_DR2/xsl_HD174240_A1IV_nir.fits"
+  -
+   name: "HD174512"
+   sp_type: "A0II" 
+   fits: "/templates/XSL_DR2/xsl_HD174512_A0II_nir.fits"
+  -
+   name: "HD175892"
+   sp_type: "A1" 
+   fits: "/templates/XSL_DR2/xsl_HD175892_A1V_nir.fits"
+  -
+   name: "HD194453"
+   sp_type: "A0" 
+   fits: "/templates/XSL_DR2/xsl_HD194453_A0_nir.fits"
+  -
+   name: "HD207222"
+   sp_type: "A0" 
+   fits: "/templates/XSL_DR2/xsl_HD207222_A0_nir.fits"
+  -
+   name: "HD28978"
+   sp_type: "A2IV" 
+   fits: "/templates/XSL_DR2/xsl_HD28978_A2IV_nir.fits"
+  -
+   name: "HD42143"
+   sp_type: "A0" 
+   fits: "/templates/XSL_DR2/xsl_HD42143_A0_nir.fits"
+  -
+   name: "HD43021"
+   sp_type: "A2III" 
+   fits: "/templates/XSL_DR2/xsl_HD43021_A2III_nir.fits"
+  -
+   name: "HD65372"
+   sp_type: "A3III" 
+   fits: "/templates/XSL_DR2/xsl_HD65372_A3III_nir.fits"
+  -
+   name: "HD71310"
+   sp_type: "A2" 
+   fits: "/templates/XSL_DR2/xsl_HD71310_A2_nir.fits"
+  -
+   name: "HD74721"
+   sp_type: "A0V" 
+   fits: "/templates/XSL_DR2/xsl_HD74721_A0V_nir.fits"
+  -
+   name: "HD93329"
+   sp_type: "A0" 
+   fits: "/templates/XSL_DR2/xsl_HD93329_A0_nir.fits"
+

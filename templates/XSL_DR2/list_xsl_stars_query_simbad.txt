@@ -1,0 +1,815 @@
+format object form1 "Star: %OBJECT, Coordinates: %COO(2;C;;J2000;), Spectral type: %SP(S), Gaia DR2 id: %IDLIST(Gaia DR2), Radial velocity: %RV(rv=V), Fluxes: %FLUXLIST(;N=F;) "
+query id HD 224926
+query id HD 224926
+query id HD 224926
+query id HD 358
+query id HD 1638
+query id HD 1638
+query id HD 1638
+query id HD 1638
+query id CL* NGC 121 T V8
+query id CL* NGC 121 T V1
+query id HD 2796
+query id HD 2857
+query id SV* HV 11223
+query id HD 3008
+query id HD 3883
+query id HD 4539
+query id HD 4539
+query id ISO-MCMS J004900.4-732224
+query id HD 4893
+query id ISO-MCMS J004932.4-731753
+query id ISO-MCMS J004950.3-731116
+query id HD 4813
+query id ISO-MCMS J005059.4-731914
+query id HD 4906
+query id CL* NGC 288 OCH 531
+query id CL* NGC 288 OCH 531
+query id ISO-MCMS J005304.7-730409
+query id ISO-MCMS J005307.8-730747
+query id ISO-MCMS J005314.8-730601
+query id ISO-MCMS J005332.4-730501
+query id ISO-MCMS J005422.8-730105
+query id ISO-MCMS J005531.0-731018
+query id CL* NGC 330 ROB A3
+query id CL* NGC 330 ROB A3
+query id CL* NGC 330 ROB B38
+query id ISO-MCMS J005622.2-730334
+query id ISO-MCMS J005644.8-731436
+query id SV* HV 11366
+query id ISO-MCMS J005700.7-730751
+query id ISO-MCMS J005712.2-730704
+query id HD 5544
+query id ISO-MCMS J005714.4-730121
+query id ISO-MCMS J005716.5-731052
+query id HV 12149
+query id [M2002] SMC 46662
+query id HD 5857
+query id ISO-MCMS J010031.5-730724
+query id CL* NGC 371 FTW R20
+query id CL* NGC 371 LE 31
+query id [M2002] SMC 52334
+query id [M2002] SMC 55188
+query id HD 6268
+query id HD 6229
+query id SV* HV 1963
+query id SV* HV 12179
+query id WX Psc
+query id CL* NGC 419 LE 35
+query id CL* NGC 419 LE 27
+query id BBB SMC 148
+query id BBB SMC 104
+query id HD 7595
+query id U Psc
+query id HD 8724
+query id HD 8724
+query id HD 9051
+query id HD 9051
+query id [M2002] SMC 83593
+query id HD 9356
+query id HD 9356
+query id HE 0146-1548
+query id HD 11397
+query id HD 13043
+query id HD 13043
+query id HD 14625
+query id HD 14938
+query id HD 16031
+query id HD 16160
+query id HD 16232
+query id HD 16456
+query id HD 16673
+query id HD 17072
+query id HD 17072
+query id BD+09 0352
+query id GJ 109
+query id HD 18907
+query id HD 18769
+query id HD 19019
+query id HD 19304
+query id HD 19445
+query id HD 19787
+query id HD 20619
+query id HD 21197
+query id HD 23924
+query id HD 24616
+query id HD 25329
+query id HD 25532
+query id HD 25673
+query id HD 26297
+query id BD+06 0648
+query id HD 284248
+query id HD 27295
+query id HD 27295
+query id HD 27771
+query id HD 28978
+query id HD 29391
+query id HD 29391
+query id HD 29391
+query id HD 30328
+query id T Cae
+query id SHV 0448341-691510
+query id SHV 0448341-691510
+query id SHV 0448341-691510
+query id HD 30743
+query id SHV 0452361-683928
+query id SHV 0452361-683928
+query id SHV 0452361-683928
+query id EY Eri
+query id HD 31421
+query id HV 2255
+query id HV 2255
+query id HV 2255
+query id SHV 0500412-684054
+query id SHV 0501215-680112
+query id SHV 0501215-680112
+query id SHV 0501215-680112
+query id SHV 0502469-692418
+query id SHV 0503595-691915
+query id SHV 0503595-691915
+query id SHV 0504353-712622
+query id SHV 0506368-681557
+query id SHV 0506368-681557
+query id SHV 0506368-681557
+query id HD 271018
+query id SHV 0510004-692755
+query id SHV 0510004-692755
+query id HD 33299
+query id [PHS2008] RGB 512
+query id [PHS2008] RGB 522
+query id HD 33793
+query id HV 2360
+query id [PHS2008] RGB 533
+query id SHV 0515313-694303
+query id SHV 0515461-691822
+query id SHV 0517337-725738
+query id SHV 0518222-750327
+query id SHV 0518161-683543
+query id SHV 0518331-685102
+query id SHV 0518570-692207
+query id SHV 0518571-690729
+query id HD 34797
+query id HD 34816
+query id SHV 0520036-692817
+query id HV 2446
+query id SHV 0520261-693826
+query id SHV 0520342-693911
+query id SHV 0520505-705019
+query id SHV 0520427-693637
+query id SHV 0520498-692715
+query id HD 271182
+query id SHV 0522380-691255
+query id HD 35179
+query id SHV 0523371-713351
+query id SHV 0523357-692038
+query id NGC 1904 153
+query id NGC 1904 160
+query id NGC 1904 223
+query id SHV 0525012-694829
+query id SHV 0525478-690944
+query id SHV 0525543-692639
+query id SHV 0526364-693639
+query id SHV 0527072-701238
+query id SHV 0527058-693746
+query id SHV 0527122-695006
+query id HD 35601
+query id HV 2555
+query id SHV 0528537-695119
+query id CL* NGC 1978 LE 09
+query id CL* NGC 1978 LE 09
+query id CL* NGC 1978 LE 09
+query id [M2002] LMC 143035
+query id SHV 0529222-684846
+query id SHV 0529355-694037
+query id SHV 0529355-694037
+query id SHV 0529355-694037
+query id SHV 0529467-693825
+query id SHV 0530380-702618
+query id SHV 0530380-702618
+query id [M2002] LMC 148035
+query id [M2002] LMC 150040
+query id SHV 0531398-701050
+query id SHV 0531398-701050
+query id HD 36395
+query id SHV 0531582-701623
+query id SHV 0531582-701623
+query id HD 36702
+query id HD 37763
+query id SHV 0533015-720047
+query id SHV 0533130-702409
+query id [M2002] LMC 157533
+query id [M2002] LMC 158646
+query id [M2002] LMC 159974
+query id SHV 0534578-702532
+query id SHV 0534578-702532
+query id SHV 0534578-702532
+query id SHV 0535237-700720
+query id SHV 0535237-700720
+query id SHV 0535237-700720
+query id [M2002] LMC 162635
+query id SHV 0536139-701604
+query id [M2002] LMC 168757
+query id [M2002] LMC 170452
+query id HD 37828
+query id HD 37828
+query id SHV 0542111-683837
+query id SHV 0542111-683837
+query id SHV 0543367-695800
+query id HD 38145
+query id HD 38237
+query id HD 270110
+query id HD 38769
+query id HD 38856
+query id HD 38856
+query id SHV 0549503-704331
+query id HD 39587
+query id HD 39833
+query id HD 39801
+query id HD 39949
+query id HD 250792
+query id HD 41667
+query id HD 41433
+query id SHV 0606101-724012
+query id HD 41661
+query id HD 41770
+query id HD 42143
+query id HD 42182
+query id HD 42256
+query id HD 42597
+query id HD 42983
+query id HD 43021
+query id HD 43286
+query id HD 44007
+query id HD 44285
+query id HD 44515
+query id LHS 1841
+query id HD 44391
+query id HD 44770
+query id HD 45196
+query id HD 45282
+query id HD 45507
+query id HD 46454
+query id IRAS 06404+0311
+query id IRAS 06404+0311
+query id HD 48616
+query id HD 49068
+query id HD 49739
+query id IRAS 06498-1102
+query id HD 50372
+query id HD 50877
+query id HD 50819
+query id HD 52298
+query id HD 52005
+query id HD 53003
+query id HD 52973
+query id CL* NGC 2324 BSV 10828
+query id HD 53927
+query id HD 54828
+query id AL Mon
+query id HD 55693
+query id HD 55583
+query id HD 56448
+query id HD 57060
+query id HD 57132
+query id HD 57707
+query id BD-16 1934
+query id BD-16 1934
+query id HD 58051
+query id HD 58072
+query id HD 58455
+query id HD 58554
+query id HD 58790
+query id HD 59295
+query id BD+24 1676
+query id HD 59984
+query id HD 60319
+query id HD 61064
+query id HD 61064
+query id BD-01 1792
+query id BD-01 1792
+query id [W71b] 008-03
+query id CD-31 4916
+query id HD 62968
+query id HD 63302
+query id [ABC89] Pup17
+query id HD 64332
+query id HD 64630
+query id HD 65354
+query id HD 65372
+query id HD 65583
+query id [ABC89] Pup42
+query id HD 66776
+query id RU Pup
+query id HD 69701
+query id HD 69701
+query id HD 70138
+query id R Cha
+query id HD 71160
+query id HD 71310
+query id HD 71310
+query id HD 71497
+query id HD 72968
+query id HD 74088
+query id HD 73665
+query id HD 74166
+query id HD 74000
+query id BD+25 1981
+query id HD 74721
+query id HD 75318
+query id NGC 2682 108
+query id NGC 2682 108
+query id LHS 2065
+query id LHS 2065
+query id HD 76221
+query id HD 76780
+query id HD 76780
+query id HD 78737
+query id HD 79349
+query id HD 79349
+query id HD 81797
+query id BD+09 2190
+query id HD 82734
+query id HD 83212
+query id HD 83632
+query id CM Car
+query id HD 84937
+query id IRAS 09484-6242
+query id Y Hya
+query id HD 85380
+query id HD 85773
+query id BS 3923
+query id IRAS 10019-6156
+query id HD 88737
+query id IRAS 10151-6008
+query id EV Car
+query id BS 4104
+query id HD 90862
+query id BD+30 2034
+query id TU Car
+query id CPD-5703502
+query id HD 93329
+query id BD+29 2091
+query id HD 93487
+query id HD 93813
+query id CI Vel
+query id HD 96446
+query id HD 96446
+query id U Crt
+query id HD 98468
+query id HD 98817
+query id [W65] c2
+query id [W65] c2
+query id HD 99109
+query id HD 99329
+query id HD 99491
+query id BD+04 2466
+query id HD 99648
+query id BS 4432
+query id BS 4463
+query id CD-60 3621
+query id CD-60 3636
+query id HD 100906
+query id UZ Cen
+query id HD 101712
+query id HD 101712
+query id HE 1142-1422
+query id BS 4517
+query id HD 102634
+query id LHS 2463
+query id V354 Cen
+query id LHS 318
+query id HD 103877
+query id HD 103932
+query id HD 104307
+query id LHS 320
+query id HE 1201-1512
+query id HD 104893
+query id HE 1204-0744
+query id HD 105262
+query id HE 1207-3108
+query id NGC 4147 230
+query id HD 105740
+query id G012-021
+query id HD 106304
+query id CD-28 9374
+query id G013-035
+query id G013-035
+query id HD 108564
+query id HD 108915
+query id HD 109307
+query id HD 109443
+query id HD 109871
+query id HD 110184
+query id V Crv
+query id BD+03 2688
+query id HD 110885
+query id HD 111515
+query id HD 111631
+query id HD 111721
+query id HD 111786
+query id LHS 343
+query id HD 112374
+query id HD 113002
+query id Kelu 1
+query id HD 114606
+query id HD 114960
+query id HIP 64965
+query id HD 116114
+query id HD 116544
+query id G063-026
+query id NGC 5139 1627
+query id NGC 5139 1627
+query id CL* NGC 5139 SAW V1
+query id CL* NGC 5139 SAW V1
+query id HD 116745
+query id HD 116745
+query id NGC 5139 3812
+query id NGC 5139 3812
+query id HD 117880
+query id HD 118055
+query id HD 118100
+query id HIP 66993
+query id HD 119802
+query id HD 119850
+query id HE 1346-0427
+query id [ABC89] Cir18
+query id [ABC89] Cir18
+query id [ABC89] Cir18
+query id [ABC89] Cir18
+query id HD 122956
+query id HD 124292
+query id BD+09 2860
+query id BD+09 2870
+query id BD+01 2916
+query id HD 126053
+query id HIP 70472
+query id HD 126661
+query id HD 126778
+query id HD 126681
+query id HE 1428-1950
+query id BD+18 2890
+query id IRAS 14303-1042
+query id HD 128429
+query id HD 128801
+query id CD-26 10417
+query id HD 130095
+query id HD 130322
+query id BD+06 2986
+query id BD+06 2986
+query id BD+30 2611
+query id BD+30 2611
+query id HD 134063
+query id HD 134063
+query id IRAS 15060+0947
+query id HD 134440
+query id HD 134439
+query id CL* NGC 5904 Arp III-03
+query id CL* NGC 5904 Arp IV-19
+query id HIP 75423
+query id HIP 75423
+query id HD 138290
+query id HD 138776
+query id HD 138776
+query id X Lib
+query id X Lib
+query id HD 140232
+query id HD 139717
+query id HD 140283
+query id HD 140283
+query id HD 141531
+query id HD 141531
+query id HD 141531
+query id HD 141531
+query id HD 142575
+query id HD 142703
+query id HD 143459
+query id HD 144172
+query id HD 144921
+query id HD 144921
+query id CPD-53 07400f
+query id CPD-53 07400f
+query id HD 147550
+query id BD-11 4126
+query id CL* NGC 6121 LEE 2626
+query id CL* NGC 6121 LEE 2626
+query id CL* NGC 6121 LEE 2626
+query id CL* NGC 6121 LEE 2303
+query id CL* NGC 6121 LEE 4302
+query id CL* NGC 6121 LEE 4302
+query id CL* NGC 6121 LEE 4611
+query id CL* NGC 6121 LEE 4611
+query id CL* NGC 6121 LEE 4613
+query id BD+09 3223
+query id HD 149382
+query id HD 150281
+query id G169-28
+query id GJ 644C
+query id G019-013
+query id HIP 84123
+query id CD-69 1618
+query id HD 157089
+query id CD-49 11404
+query id CD-49 11404
+query id RR Ara
+query id RR Ara
+query id FR Her
+query id HD 160365
+query id HD 160346
+query id NGC 6397 211
+query id HD 161149
+query id HD 161227
+query id HD 161370
+query id HD 161817
+query id G20-15
+query id OGLEII DIA BUL-SC26 0532
+query id HD 161770
+query id OGLEII DIA BUL-SC15 1379
+query id OGLEII DIA BUL-SC15 2106
+query id V348 Sco
+query id SY Pav
+query id SY Pav
+query id SY Pav
+query id SY Pav
+query id HD 162652
+query id OGLEII DIA BUL-SC41 3443
+query id OGLEII DIA BUL-SC41 3304
+query id OGLEII DIA BUL-SC03 3941
+query id OGLEII DIA BUL-SC24 0989
+query id OGLEII DIA BUL-SC03 1890
+query id 2MASS J17535707-2931427
+query id OGLEII DIA BUL-SC04 9008
+query id OGLEII DIA BUL-SC04 4628
+query id BD+20 3603
+query id OGLEII DIA BUL-SC04 1709
+query id HD 163346
+query id HD 163641
+query id OGLEII DIA BUL-SC22 1319
+query id HD 163810
+query id HD 164115
+query id TLE Sgr I 55
+query id TLE Sgr I 11
+query id HD 164257
+query id TLE Sgr I 117
+query id HD 164432
+query id OGLEII DIA BUL-SC30 0707
+query id OGLEII DIA BUL-SC01 0235
+query id OGLEII DIA BUL-SC01 1821
+query id BMB 3
+query id BMB 2
+query id BMB 13
+query id HD 164967
+query id BMB 106
+query id CL* NGC 6522 ARP 4126
+query id CL* NGC 6522 Arp 4329
+query id V5475 Sgr
+query id V5475 Sgr
+query id CL* NGC 6522 ARP 3190
+query id CL* NGC 6522 ARP 3213
+query id 2MASS J18033716-2954227
+query id CL* NGC 6522 ARP 1021
+query id CL* NGC 6522 ARP 1021
+query id CL* NGC 6522 ARP 1073
+query id BMB 162
+query id [B86] 133
+query id BMB 245
+query id 2MASS J18041187-3006214
+query id BMB 286
+query id BMB 289
+query id BMB 300
+query id HD 165195
+query id OGLEII DIA BUL-SC33 4149
+query id OGLEII DIA BUL-SC36 2158
+query id OGLEII DIA BUL-SC33 0357
+query id HD 165438
+query id OGLEII DIA BUL-SC19 2302
+query id OGLEII DIA BUL-SC06 2525
+query id OGLEII DIA BUL-SC19 2332
+query id HD 165887
+query id 2MASS J18080765-3142020
+query id OGLEII DIA BUL-SC19 2948
+query id 2MASS J18083220-3201531
+query id 2MASS J18092055-3147006
+query id 2MASS J18092323-3141039
+query id 2MASS J18093159-3150397
+query id 2MASS J18093159-3150397
+query id 2MASS J18093344-3145250
+query id Gaia DR2 4049054206130689024
+query id HD 166161
+query id HD 166283
+query id XZ Her
+query id OGLEII DIA BUL-SC16 1428
+query id HD 166991
+query id HD 167278
+query id OGLEII DIA BUL-SC13 0324
+query id OGLEII DIA BUL-SC13 1542
+query id HD 167946
+query id RY CrA
+query id RY CrA
+query id HD 169032
+query id OGLEII DIA BUL-SC08 1687
+query id HD 170413
+query id HD 170756
+query id HD 170783
+query id HD 170899
+query id HD 170820
+query id HD 171234
+query id HD 171367
+query id 2MASS J18351420-3438060
+query id 2MASS J18351799-3428093
+query id 2MASS J18352206-3429112
+query id 2MASS J18352834-3444085
+query id 2MASS J18352834-3444085
+query id 2MASS J18355679-3434481
+query id HD 171496
+query id HD 171496
+query id HD 171496
+query id HD 172230
+query id HD 172365
+query id HD 172472
+query id HD 172522
+query id HD 172506
+query id HD 172488
+query id HD 173073
+query id HD 173158
+query id HD 173369
+query id V874 Aql
+query id V874 Aql
+query id HD 173669
+query id G021-024
+query id V CrA
+query id BH Tel
+query id HD 174240
+query id HD 174350
+query id HD 174512
+query id HD 174866
+query id HD 174966
+query id HD 174966
+query id HD 174966
+query id HD 175058
+query id HD 175181
+query id HD 175376
+query id HD 175545
+query id HD 175640
+query id HD 175640
+query id HD 175805
+query id HD 175805
+query id HD 175892
+query id HD 176301
+query id HD 176698
+query id HD 176851
+query id HD 178287
+query id HD 179315
+query id HD 179870
+query id HD 179870
+query id HD 179821
+query id HD 179821
+query id HD 180086
+query id GJ 752B
+query id HD 183085
+query id CD-24 15398
+query id HD 184266
+query id HD 184571
+query id HD 185094
+query id HD 232078
+query id HD 232078
+query id HIP 96710
+query id HD 186478
+query id HD 187111
+query id Y Sge
+query id NGC 6838 1078
+query id NGC 6838 1078
+query id CL* NGC 6838 AH A9
+query id CL* NGC 6838 AH A9
+query id NGC 6838 1077
+query id NGC 6838 1077
+query id NGC 6838 1075
+query id NGC 6838 1075
+query id NGC 6838 1073
+query id NGC 6838 1073
+query id NGC 6838 1071
+query id NGC 6838 1066
+query id NGC 6838 1066
+query id NGC 6838 1066
+query id HD 188262
+query id HD 188262
+query id NGC 6838 1063
+query id NGC 6838 1063
+query id NGC 6838 1037
+query id NGC 6838 1037
+query id NGC 6838 1037
+query id NGC 6838 1039
+query id NGC 6838 1039
+query id NGC 6838 1009
+query id NGC 6838 1053
+query id CL* NGC 6838 AH A2
+query id CL* NGC 6838 AH A2
+query id CL* NGC 6838 AH A2
+query id HD 188510
+query id HD 189511
+query id HD 190073
+query id HD 190073
+query id HD 190404
+query id HD 190404
+query id HD 190404
+query id HD 190390
+query id G024-003
+query id HD 345957
+query id HD 191709
+query id HIP 100047
+query id HIP 100047
+query id HD 193225
+query id HD 193326
+query id HD 193281
+query id HD 193281
+query id V335 Aql
+query id HD 193896
+query id HD 193896
+query id HD 194453
+query id HD 194453
+query id HD 195729
+query id HD 196125
+query id HD 196218
+query id HD 196426
+query id HD 196426
+query id HD 196892
+query id HD 196892
+query id CD-30 18140
+query id BPS CS 30336-049
+query id HD 198140
+query id HD 198140
+query id HD 198140
+query id HIP 103039
+query id BD-14 5890
+query id HD 200081
+query id HD 200081
+query id HD 200494
+query id HD 200779
+query id CD-62 1346
+query id HD 201053
+query id HD 201237
+query id HD 201237
+query id HD 201237
+query id HD 201377
+query id HD 201626
+query id HD 201626
+query id HD 202851
+query id HD 202851
+query id G187-40
+query id HD 204041
+query id HD 204041
+query id HD 204155
+query id HD 204155
+query id HD 204543
+query id HD 204587
+query id HD 204587
+query id NGC 7078 1079
+query id HD 205202
+query id HD 205202
+query id HD 205555
+query id HD 205734
+query id HD 205734
+query id HD 205734
+query id G188-22
+query id BD-09 5831
+query id HD 207222
+query id HD 207222
+query id HD 207222
+query id HD 207795
+query id HD 209290
+query id HD 209290
+query id DG Peg
+query id HD 210295
+query id BD+17 4708
+query id BD+17 4708
+query id BD+17 4708
+query id HD 211075
+query id G018-039
+query id HD 212516
+query id 2MASS J22244381-0158521
+query id HD 213042
+query id HD 214080
+query id GJ 866
+query id HD 215578
+query id HD 215578
+query id HD 215578
+query id HD 216143
+query id HD 216219
+query id HD 216219
+query id HD 217357
+query id HD 217877
+query id HD 217877
+query id HD 218502
+query id HD 218566
+query id HD 218566
+query id HD 218857
+query id G029-023
+query id Feige 110
+query id Feige 110
+query id Feige 110
+query id HD 220662
+query id HD 220838
+query id HD 221170
+query id HD 221149
+query id BD+19 5116B
+query id HD 222434
+format display
