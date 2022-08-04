@@ -1,0 +1,16 @@
+# SERIES	TRANSITION	WAVELENGTH
+Paschen	4-3	1.87561
+Paschen	5-3	1.28216
+Paschen	6-3	1.09411
+Paschen	7-3	1.00521
+Paschen	8-3	0.95486
+Paschen	9-3	0.92315
+Paschen	10-3	0.90174
+Paschen	11-3	0.88652
+Paschen	12-3	0.87529
+Paschen	13-3	0.86674
+Paschen	14-3	0.86008
+Paschen	15-3	0.85477
+Paschen	16-3	0.85048
+Paschen	17-3	0.84696
+Paschen	18-3	0.84403

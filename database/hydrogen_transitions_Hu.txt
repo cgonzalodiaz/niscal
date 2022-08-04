@@ -1,0 +1,16 @@
+# SERIES	TRANSITION	WAVELENGTH
+Humphreys	10-6	5.12865
+Humphreys	11-6	4.67251
+Humphreys	13-6	4.17080
+Humphreys	14-6	4.02087
+Humphreys	15-6	3.90755
+Humphreys	16-6	3.81945
+Humphreys	17-6	3.74940
+Humphreys	18-6	3.69264
+Humphreys	19-6	3.64593
+Humphreys	20-6	3.60697
+Humphreys	21-6	3.57410
+Humphreys	22-6	3.54610
+Humphreys	23-6	3.52203
+Humphreys	24-6	3.50116
+Humphreys	25-6	3.48296

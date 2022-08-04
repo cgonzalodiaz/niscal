@@ -1,0 +1,16 @@
+# SERIES	TRANSITION	WAVELENGTH
+Paschen	4-3	1.87561
+Paschen	5-3	1.28216
+Brackett	9-4	1.81791
+Brackett	10-4	1.73669
+Brackett	11-4	1.68111
+Brackett	12-4	1.64117
+Brackett	13-4	1.61137
+Brackett	14-4	1.58849
+Brackett	15-4	1.57050
+Brackett	16-4	1.55607
+Brackett	17-4	1.54431
+Brackett	18-4	1.53460
+Brackett	19-4	1.52647
+Brackett	20-4	1.51960
+Brackett	21-4	1.51374
