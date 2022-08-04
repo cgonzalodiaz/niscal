@@ -1,59 +1,38 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
-# =============================================================================
-# DOCS
-# =============================================================================
-
 """NISCAL: Near Infrared Spectroscopic Calibrator
 
 @author: Gonzalo Diaz
 
-NISCAL is a python package that calculates the telluric correction function 
-from the observed telluric star spectrum and a list of templates defined 
-by the user. The code finds the best matching template and applies the 
-telluric correction to the science data. Flux calibration is applied based on
-the magnitude of the telluric star in the 2MASS catalogue.
-
+NISCAL is a python script that calculates the telluric correction
+function from the observed telluric star spectrum and a list of
+template spectra defined by the user. The code finds the best matching
+template and applies the telluric correction to the science data.
+Flux calibration is also available.
 The code should run like this:
-  $ python niscal.py niscal_conf.yaml  
-#-----------------------------------------
-#Telluric correction to the science spectrum              #
-#---------------------------------------------
-# Note that IF the telluric spectrum is not corrected to remove intrinsic 
-# stellar
-# spectrum it will leave false emission features in the final science spectrum.
-# This code will remove the intrinsic stellar spectrum using stellar templates.
-# Briefly, the code will:
-# 1 - Load a telluric spectra and a science spectra.
-# 2 - Load the stellar template spectra to use for comparison and removal of 
-#     intrisec stellar features.
-# 3 - If radial velocity of the telluric star is not provided, 
-#     get radial velocity of the telluric star from the templates
-#     Select the wavelength range for the cross correlation
-#     Model for the continuum can be changed too.
-# 4 - Shift template in radial velocity
-# 5 - Resample the template and Copy the region of interest, which can be 
-#     edited. 
-# 6 - Calculate the ratio and the difference of the telluric spectrum 
-#     and the velocity-corrected templates.
-#
-# 7 - Evaluates the quality of the correction: 
-#     How good is the fit? minimise residuals
-#
-# 8 - Applies a telluric correction to the science using the ratio 
-#     telluric/template.
-#
-#----------------------------------------------
-# Flux calibration of the science spectrum              #
-#----------------------------------------------
-# 9 - If the 2MASS magnitude is know, use photflux_cal and calibrate in flux
-#     based on the 2MASS magnitude of the source
-#
-# 10 - If the 2MASS magnitude of the telluric star is known, calculte the 
-#     flux calibration function to convert ADUs/s in flux using the telluric 
-#     observation.
+$ python niscal.py niscal_conf.yaml
 
+For the telluric correction the code will remove the intrinsic stellar
+spectrum of the telluric star using stellar templates. The code will:
+1 - Loads a telluric spectra and a science spectra.
+2 - Loads the stellar template spectra to use for comparison and
+    removal of intrisec stellar features.
+3 - If radial velocity of the telluric star is not provided,
+    calculates the radial velocity difference between the telluric star
+    and the templates.
+4 - Shifts template in radial velocity
+5 - Resamples the template and copy the region of interest.
+6 - Calculates the ratio and the difference of the telluric spectrum
+    and the velocity-corrected templates.
+7 - Evaluates the quality of the correction:
+    How good is the fit? Selection is based on minimum residuals.
+8 - Applies a telluric correction to the science using the ratio
+    telluric/template.
+9 - If the 2MASS magnitude is know, photflux_cal provides a calibration
+    in flux based on the 2MASS transmission filter.
+10- If the 2MASS magnitude of the telluric star is known, calcultes
+    the flux calibration function to convert ADUs/s in flux using 
+    the telluric star spectrum.
 """
 
 # =============================================================================
@@ -101,13 +80,22 @@ from specutils.manipulation import LinearInterpolatedResampler
 from specutils.manipulation import SplineInterpolatedResampler
 from specutils.fitting import fit_generic_continuum
 
-# =============================================================================
+# =====================================================================
 # FUNCTIONS
-# =============================================================================
+# =====================================================================
 
 
 def generic_fits(
         spectrum, file_name, **kwargs):
+    """Writes a fits file from a Spectrum1D
+
+    Parameters
+    ----------
+    spectrum : str
+        The ....
+    file_name : str
+        A fla...
+    """   
     flux = spectrum.flux.value
     inverse_var = spectrum.uncertainty.array
     wavelength = spectrum.spectral_axis.value
@@ -1646,25 +1634,21 @@ def TellFlux(best_template, in_config, DataBase):
     
     return fts_sci,fts_sci_p,fts_sci_m
     
-# =============================================================================
+# =====================================================================
 # PROGRAM
-# =============================================================================
+# =====================================================================
 def niscal():
-    # =========================================================================
     # 0 - Read configuration file
-    # =========================================================================
     config_file = sys.argv[1]
     #config_file = 'niscal_conf.yaml'
     stream = open(config_file, 'r')
     in_config = yaml.load(stream, Loader=yaml.FullLoader)
-    # =========================================================================
     # Database location 
     DataBase='/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/database/'
-    # =========================================================================
     # Working directory containing. Input data is expected here. 
     wdir= in_config["wdir"] 
     os.chdir(wdir)   
-    # =========================================================================
+    # =================================================================
     # 1 - Telluric correction. 
     # If you know the template just go get it.
     if "which_template" in in_config:
@@ -1680,7 +1664,7 @@ def niscal():
         print(
             'Your best option is Template ', best_template+1, \
                 ':', in_config["template_list"][best_template]["name"] )
-    # =========================================================================
+    # =====================================================================
     # 2 - Flux calibration
     if in_config["fluxing"]:
         if "magnitude_sci" in in_config:
@@ -1731,7 +1715,7 @@ def niscal():
             ######################################
     else:
         print('Flux Calibration Disabled')
-    # =========================================================================
+    # =====================================================================
     # # Write fits files:
     #  1- Telluric calibrated science and error
     print('Telluric calibrated science and error')
