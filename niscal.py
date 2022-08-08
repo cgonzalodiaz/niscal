@@ -108,6 +108,23 @@ def generic_fits(
 def plot_continuum_fit_Ks(
         ni, ds_telu, de_telu, telu_continuum, ds_temp, temp_continuum,
         av1, min_wav, max_wav, plot_dirRV):
+    """Plots
+ 
+    This tool does ....
+
+    Parameters
+    ----------
+    ni, ds_telu, de_telu, telu_continuum, ds_temp, temp_continuum,
+        av1, min_wav, max_wav, plot_dirRV
+   
+    in_config : str
+        The name of the yamml configuration file
+
+    Returns
+    -------
+    A plot
+
+    """
     # av1_spectrum = extract_region(ds_telu, av1[0])
     # av2_spectrum = extract_region(ds_telu, av1[1])
     # av3_spectrum = extract_region(ds_telu, av1[2])
@@ -179,6 +196,23 @@ def plot_continuum_fit_Ks(
 
 def plot_norm_spec_Ks(
     ni,telu_n,telu_e,temp_n,av1,min_wav, max_wav,plot_dirRV):
+    """Plots
+ 
+    This tool does ....
+
+    Parameters
+    ----------
+    ni, ds_telu, de_telu, telu_continuum, ds_temp, temp_continuum,
+        av1, min_wav, max_wav, plot_dirRV
+   
+    in_config : str
+        The name of the yamml configuration file
+
+    Returns
+    -------
+    A plot
+
+    """
     av1_spectrum = extract_region(telu_n, av1[0])
     #av2_spectrum = extract_region(telu_n, av2)
     #av3_spectrum = extract_region(telu_n, av3)
@@ -241,6 +275,23 @@ def plot_norm_spec_Ks(
     dpi=100, bbox_inches='tight')
         
 def read_spec(filename):
+    """Loads a fits file into a Spuntrum1D object
+ 
+    This tool does ....
+
+    Parameters
+    ----------
+    filename : str
+        The name of the fits to read
+
+    Returns
+    -------
+    auxspec
+        A Spectrum1d object of the fits file spectrum
+    wcs_file
+        Word Coord. System information in the fits
+    """
+
     h_file = fits.open(filename)
     wcs_file = wcs.WCS(h_file[('sci',1)].header,h_file)
     w1_file = h_file[1].header['CRVAL1']
@@ -261,6 +312,23 @@ def read_spec(filename):
     return auxspec, wcs_file
 
 def read_2_spec(filename1, filename2):
+    """Loads a fits file into a Spuntrum1D object
+ 
+    This tool does ....
+
+    Parameters
+    ----------
+    filename : str
+        The name of the fits to read
+
+    Returns
+    -------
+    auxspec
+        A Spectrum1d object of the fits file spectrum
+    wcs_file
+        Word Coord. System information in the fits
+    """    
+    
     # file 1 provides de wavelength
     #filename1 = 'xtfobj_comb.fits'
     #filename2 = 'xtftel_comb_new.fits'
@@ -302,6 +370,23 @@ def read_2_spec(filename1, filename2):
 
 
 def read_template(filename):
+    """Loads a fits file into a Spuntrum1D object
+ 
+    This tool does ....
+
+    Parameters
+    ----------
+    filename : str
+        The name of the fits to read
+
+    Returns
+    -------
+    auxspec
+        A Spectrum1d object of the fits file spectrum
+    wcs_file
+        Word Coord. System information in the fits
+    """
+
     #template_file = get_pkg_data_filename(filename)
     #fits.info(template_file)
     h_temp = fits.open(filename)
@@ -328,8 +413,22 @@ def read_template(filename):
 
 
 def  get_hidro_lines(min_wav_rv,max_wav_rv, DataBase):
-    # Read Hidrogen lines
-    # options are: Br, Hu , Pa, Hband, Ksband, Pf, All  
+    """Read Hidrogen lines
+
+    Options are: Br, Hu , Pa, Hband, Ksband, Pf, All  
+
+    Parameters
+    ----------
+    filename : str
+        The name of the fits to read
+
+    Returns
+    -------
+    auxspec
+        A Spectrum1d object of the fits file spectrum
+    wcs_file
+        Word Coord. System information in the fits
+    """
 
     if min_wav_rv > 19800: 
         tab= DataBase+'hydrogen_transitions_Ks-band.txt'
@@ -405,6 +504,23 @@ def  get_hidro_lines(min_wav_rv,max_wav_rv, DataBase):
 
 
 def show_region_rv(spe_telu,spe_temp,in_config,DataBase):
+    """Read Hidrogen lines
+
+    Options are: Br, Hu , Pa, Hband, Ksband, Pf, All  
+
+    Parameters
+    ----------
+    filename : str
+        The name of the fits to read
+
+    Returns
+    -------
+    auxspec
+        A Spectrum1d object of the fits file spectrum
+    wcs_file
+        Word Coord. System information in the fits
+    """
+    
     #read the tellurc spec from ITC
     min_wav_rv = in_config["rvwavmin"], 
     max_wav_rv = in_config["rvwavmax"], 
@@ -495,6 +611,23 @@ def show_region_rv(spe_telu,spe_temp,in_config,DataBase):
     fn.savefig('region_rv.png', dpi=100, bbox_inches='tight')
 
 def get_rv_one(s_telu,w_telu,spec_temp,min_wav_rv,max_wav_rv,which_temp, DataBase):
+    """Read Hidrogen lines
+    
+    Options are: Br, Hu , Pa, Hband, Ksband, Pf, All  
+
+    Parameters
+    ----------
+    filename : str
+        The name of the fits to read
+
+    Returns
+    -------
+    auxspec
+        A Spectrum1d object of the fits file spectrum
+    wcs_file
+        Word Coord. System information in the fits
+    """
+
     # 2- Get radial velocity of telluric star from the template
     # FOR ALL THE TEMPLATES
     # PRINT A TABLE
@@ -600,6 +733,23 @@ def get_rv(
     max_wav_rv,
     n_templ,
     DataBase):
+    """Read Hidrogen lines
+    
+    Options are: Br, Hu , Pa, Hband, Ksband, Pf, All  
+
+    Parameters
+    ----------
+    filename : str
+        The name of the fits to read
+
+    Returns
+    -------
+    auxspec
+        A Spectrum1d object of the fits file spectrum
+    wcs_file
+        Word Coord. System information in the fits
+    """
+
     # 2- Get radial velocity of telluric star from the template
     # FOR ALL THE TEMPLATES
     # PRINT A TABLE
@@ -708,6 +858,23 @@ def get_rv(
     return rv_out
 
 def get_quality(diff_spec,min_wav_q,max_wav_q):
+    """Read Hidrogen lines
+    
+    Options are: Br, Hu , Pa, Hband, Ksband, Pf, All  
+
+    Parameters
+    ----------
+    filename : str
+        The name of the fits to read
+
+    Returns
+    -------
+    auxspec
+        A Spectrum1d object of the fits file spectrum
+    wcs_file
+        Word Coord. System information in the fits
+    """
+
     # first number: residuals of the hidrogen line
     # 1- extract the region 
     reg_temp = SpectralRegion(min_wav_q * u.AA, max_wav_q * u.AA)
@@ -726,6 +893,22 @@ def get_quality(diff_spec,min_wav_q,max_wav_q):
     return quality_stats
   
 def get_tell_cor(vshift, telluric, w_telu, template, in_config, wi):
+    """Read Hidrogen lines
+
+    Options are: Br, Hu , Pa, Hband, Ksband, Pf, All  
+
+    Parameters
+    ----------
+    filename : str
+        The name of the fits to read
+
+    Returns
+    -------
+    auxspec
+        A Spectrum1d object of the fits file spectrum
+    wcs_file
+        Word Coord. System information in the fits
+    """
     minwav = in_config["minwav"]
     maxwav = in_config["maxwav"] 
     tempname = in_config["template_list"][wi]["name"]
@@ -842,6 +1025,23 @@ def get_tell_cor(vshift, telluric, w_telu, template, in_config, wi):
     return new_disp_grid, q_stats, ds_telu, s_difference, s_ratio
 
 def apply_tell_cor(s_science, s_telu, tes_rat, which_wav_scale, new_disp_grid):
+    """Read Hidrogen lines
+    
+    Options are: Br, Hu , Pa, Hband, Ksband, Pf, All  
+
+    Parameters
+    ----------
+    filename : str
+        The name of the fits to read
+
+    Returns
+    -------
+    auxspec
+        A Spectrum1d object of the fits file spectrum
+    wcs_file
+        Word Coord. System information in the fits
+    """
+
     fluxcon = FluxConservingResampler()
     ds_science = fluxcon(s_science, new_disp_grid)    
     tcor_sci = ds_science / tes_rat
@@ -934,17 +1134,33 @@ def apply_tell_cor(s_science, s_telu, tes_rat, which_wav_scale, new_disp_grid):
     fsc.savefig('Tel_corrected_science.png', dpi=150, bbox_inches='tight')
     return tcor_sci, tcor_telu
  
-def load_templates(in_config,new_disp_grid):
-    # text file with a list of templates and spectral type
-    #delta_wav = 2.6 
-    #new_disp_grid = np.arange(in_config["minwav"], in_config["maxwav"], delta_wav_t) * u.AA
-    ###### needs to read a list of template fluxes without knowing how big the list is.
+def load_templates(
+    in_config,
+    new_disp_grid):
+    """Re-samples a list of spectra on the same dispersion axis 
+    
+    This tool ....
+    
+    Parameters
+    ----------
+    in_config : str
+        The configuration file with a list of templates 
+        and spectral type
+    new_disp_grid :  
+    
+    Returns
+    -------
+    flux_templates
+        A Spectrum1d object o...
+    err_templates
+        A Spectrum1d object o...
+    """
+    # Read a list of template fluxes without knowing how big the list is.
     template_fluxes = np.zeros((len(in_config["template_list"]), len(new_disp_grid)))
     template_err = np.zeros((len(in_config["template_list"]), len(new_disp_grid)))
     
     for ii in np.arange(len(in_config["template_list"])):
         n_template = in_config["template_list"][ii]["fits"]
-        #s_temp = read_template(n_template)
         s_temp, e_temp = read_template(n_template)
         fluxcon = FluxConservingResampler()
         ds_temp = fluxcon(s_temp, new_disp_grid) 
@@ -958,6 +1174,23 @@ def load_templates(in_config,new_disp_grid):
     return flux_templates, err_templates
 
 def mag2flux_2mass(m_in,er_m_in,ref_wav,DataBase):
+    """Read Hidrogen lines
+    
+    Options are: Br, Hu , Pa, Hband, Ksband, Pf, All  
+
+    Parameters
+    ----------
+    filename : str
+        The name of the fits to read
+
+    Returns
+    -------
+    auxspec
+        A Spectrum1d object of the fits file spectrum
+    wcs_file
+        Word Coord. System information in the fits
+    """
+
     # Identify de observed band and load convertion factors
         # For Ks band in 2MAS system
     if (ref_wav > 19970):
@@ -1073,7 +1306,23 @@ def get_this_one(in_config, DataBase):
     return tcor_sci,tcor_telu, spec_rat, spec_dif
 
 def plot_quality(fflog):
- 
+    """Read Hidrogen lines
+    
+    Options are: Br, Hu , Pa, Hband, Ksband, Pf, All  
+
+    Parameters
+    ----------
+    filename : str
+        The name of the fits to read
+
+    Returns
+    -------
+    auxspec
+        A Spectrum1d object of the fits file spectrum
+    wcs_file
+        Word Coord. System information in the fits
+    """
+
     print(' Plotting quality assessment' )
     data = ascii.read(fflog)
     # find minimum Std. Dev
@@ -1239,21 +1488,51 @@ def plot_quality(fflog):
     return id_mindis[0]
 
 def find_best_template(in_config, DataBase):
-    ######################################
+    """Finds the template with the best quality index
+ 
+    This tool does ....
+
+    Parameters
+    ----------
+    in_config : str
+        The name of the yamml configuration file
+    DataBase : str
+        The path to the location of the ....
+
+    Returns
+    -------
+    best_template
+        The number of ...
+    tcor_science
+        Telluric corrected version of the science spectrum.
+    tcor_telluric
+        Telluric corrected version of the telluric star spectrum.
+    spec_rat
+        Ratio of observed spectrum over best-matched template spectrum.
+        This is the telluric correction function.
+    spec_dif
+        Difference between the observed and the template spectra.
+        This is the quality control function.
+    
+
+    Raises (not implemented)
+    ------
+    WavelengthMissmatchError
+        If the wavelength selected for the analisys
+        is outside the wavelength range of the data
+        or the template (not implemented).
+    """
+    
     # 1 - Read spectra and their errors
-    ######################################
     # file names of the telluric and the science objects
-    s_telu, wcs_telu= read_spec(in_config["telluric_file"])    
+    s_telu, wcs_telu = read_spec(in_config["telluric_file"])    
     s_scie, wcs_scie = read_spec(in_config["science_file"])
     delta_wav = wcs_scie.pixel_scale_matrix[0,0]
     sci_disp_grid = np.arange(in_config["minwav"], in_config["maxwav"], delta_wav) * u.AA
     fluxcon = FluxConservingResampler()
     ds_scie = fluxcon(s_scie, sci_disp_grid)
     ds_telu = fluxcon(s_telu, sci_disp_grid)    
-    ######################################
-    # 2 - Read templates
-    #  from a list of template fluxes without knowing how big the list is.
-    ######################################
+    # 2 - Read templates from a list without knowing how big the list is.
     ntemplates = len(in_config["template_list"])
     df_temp, de_temp = load_templates(in_config,sci_disp_grid) 
     
@@ -1347,7 +1626,24 @@ def find_best_template(in_config, DataBase):
     tcor_sci, tcor_telu = apply_tell_cor(ds_scie,final_spec_telu,final_tel_correction, in_config["which_wav_scale"], final_disp)
     return final_template, tcor_sci, tcor_telu, final_tel_correction, final_tel_diff
 
-def get_exp_time(filename):    
+def get_exp_time(filename):
+    """Read Hidrogen lines
+    
+    Options are: Br, Hu , Pa, Hband, Ksband, Pf, All  
+
+    Parameters
+    ----------
+    filename : str
+        The name of the fits to read
+
+    Returns
+    -------
+    auxspec
+        A Spectrum1d object of the fits file spectrum
+    wcs_file
+        Word Coord. System information in the fits
+    """
+
     h_some = fits.open(filename)
     #wcs_sci = wcs.WCS(h_telu[('sci',1)].header,h_telu)
     exptime = h_some[1].header['EXPTIME']
@@ -1355,8 +1651,23 @@ def get_exp_time(filename):
     return exptime
 
 def get_slit_cor(fullwidth, slit_width,name_source):
+    """Read Hidrogen lines
     
-   
+    Options are: Br, Hu , Pa, Hband, Ksband, Pf, All  
+
+    Parameters
+    ----------
+    filename : str
+        The name of the fits to read
+
+    Returns
+    -------
+    auxspec
+        A Spectrum1d object of the fits file spectrum
+    wcs_file
+        Word Coord. System information in the fits
+    """
+
     psf = Gaussian2DKernel(fullwidth/2.3548)
     xc,yc = psf.center
     xsize,ysize =psf.shape
@@ -1388,6 +1699,23 @@ def get_slit_cor(fullwidth, slit_width,name_source):
     return slit_c
 
 def PhotFlux(tcor_science,in_config, DataBase): 
+    """Read Hidrogen lines
+    
+    Options are: Br, Hu , Pa, Hband, Ksband, Pf, All  
+
+    Parameters
+    ----------
+    filename : str
+        The name of the fits to read
+
+    Returns
+    -------
+    auxspec
+        A Spectrum1d object of the fits file spectrum
+    wcs_file
+        Word Coord. System information in the fits
+    """
+    
     mag_in =   in_config["magnitude_sci"]
     er_mag_in = in_config["er_magnitude_sci"]
     scale_wav = in_config["which_wav_scale"]
@@ -1483,6 +1811,22 @@ def PhotFlux(tcor_science,in_config, DataBase):
 
     
 def TellFlux(best_template, in_config, DataBase): 
+    """Read Hidrogen lines
+    
+    Options are: Br, Hu , Pa, Hband, Ksband, Pf, All  
+
+    Parameters
+    ----------
+    filename : str
+        The name of the fits to read
+
+    Returns
+    -------
+    auxspec
+        A Spectrum1d object of the fits file spectrum
+    wcs_file
+        Word Coord. System information in the fits
+    """
     #  Las telluricas suelen ser observadas
     #  en Bright Mode osea Number of Reads =1
     #  la combinacion de ncombine suele ser "average".

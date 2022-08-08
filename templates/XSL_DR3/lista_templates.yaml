@@ -1,0 +1,33 @@
+ template_list:
+  -
+   name: "HD57060"
+   sp_type: "O7" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/XSL_DR3/xsl_spectrum_X0116_merged_ncl_ncge.fits"
+  -
+   name: "LMC_148035"
+   sp_type: "M5Ia" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/XSL_DR3/xsl_spectrum_X0119_merged.fits"
+  -
+   name: "HD147550"
+   sp_type: "B9V" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/XSL_DR3/xsl_spectrum_X0245_merged.fits"
+  -
+   name: "LTT2544"
+   sp_type: "M2" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/XSL_DR3/xsl_spectrum_MD002_merged_scl.fits"
+  -
+   name: "HD119802"
+   sp_type: "K3V" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/XSL_DR3/xsl_spectrum_X0379_merged.fits"
+  -
+   name: "HD175058"
+   sp_type: "A5IV" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/XSL_DR3/xsl_spectrum_X0646_merged.fits"
+  -
+   name: "BD-01_1792"
+   sp_type: "G6V" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/XSL_DR3/xsl_spectrum_X0843_merged.fits"
+  -
+   name: "HD110885"
+   sp_type: "F3V" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/XSL_DR3/xsl_spectrum_X0900_merged.fits"
