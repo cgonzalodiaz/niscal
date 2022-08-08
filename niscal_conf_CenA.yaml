@@ -1,0 +1,88 @@
+---
+ wdir: "/media/gonza/colosus/Proyecto_GNIRS/NGC5128/F2_LS/telluric_cor_4" 
+ science_file: "xtfobj_comb.fits"
+ telluric_file: "xtftel_comb_new.fits"
+ name_sci: "NGC5128"
+ name_tel: "TelluricStar"
+ # Template matching
+ which_wav_scale: 21150.0 
+ minwav: 19000.0 
+ maxwav: 24500.0 
+ #rvspeed: 88.0  
+ rvwavmin: 20900.0 
+ rvwavmax: 24000.0 
+ min_wav_q: 21560   
+ max_wav_q: 21750   
+ # flux calibration
+ fluxing: off
+ #magnitude_sci: 10.909   # 2MASS 
+ #er_magnitude_sci: 0.023
+ #magnitude_tel: 7.445   #2MASS 
+ #er_magnitude_tel: 0.023
+ slit_width: 1   # pixels 
+ #slitloss_sci: 1.2  #20% percent of light loss
+ #slitloss_tel: 1.07  #some percent of light loss
+ #fwhm_sci: 3.6 # FWHM  in pixels of PSF 
+ #fwhm_tel: 3.8 # FWHM  in ixels of PSF 
+ #which_template: 11
+ template_list:
+  -
+   name: "PAA-01"
+   sp_type: "t2m5" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL-phoenix/lte02500-4.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
+  -
+   name: "PAA-02"
+   sp_type: "t3m" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL-phoenix/lte03000-4.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
+  -
+   name: "PAA-03"
+   sp_type: "t3m5" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL-phoenix/lte03500-4.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
+  -
+   name: "PAA-04"
+   sp_type: "t4m" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL-phoenix/lte04000-4.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
+  -
+   name: "PAA-05"
+   sp_type: "t4m5" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL-phoenix/lte04500-4.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
+  -
+   name: "PAA-06"
+   sp_type: "t5m" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL-phoenix/lte05000-4.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
+  -
+   name: "PAA-07"
+   sp_type: "t5m5" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL-phoenix/lte05500-4.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
+  -
+   name: "PAA-08"
+   sp_type: "t6m" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL-phoenix/lte06000-4.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
+  -
+   name: "PAA-09"
+   sp_type: "t6m5" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL-phoenix/lte06500-4.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
+  -
+   name: "PAA-10"
+   sp_type: "t7m" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL-phoenix/lte07000-4.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
+  -
+   name: "PAA-11"
+   sp_type: "t8m" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL-phoenix/lte08000-4.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
+  -
+   name: "PAA-12"
+   sp_type: "t9m" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL-phoenix/lte09000-4.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
+  -
+   name: "PAA-13"
+   sp_type: "t10m" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL-phoenix/lte10000-4.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
+  -
+   name: "PAA-14"
+   sp_type: "t11m" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL-phoenix/lte11000-4.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
+  -
+   name: "PAA-15"
+   sp_type: "t12m" 
+   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL-phoenix/lte12000-4.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
