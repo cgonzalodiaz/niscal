@@ -1,5 +1,5 @@
 ---
- wdir: "/media/gonza/colosus/Proyecto_GNIRS/NGC5128/F2_LS/telluric_cor_4" 
+ wdir: "/media/gonza/colosus/Proyecto_GNIRS/NGC5128/F2_LS/telluric_cor_5" 
  science_file: "xtfobj_comb.fits"
  telluric_file: "xtftel_comb_new.fits"
  name_sci: "NGC5128"
@@ -25,6 +25,7 @@
  #fwhm_sci: 3.6 # FWHM  in pixels of PSF 
  #fwhm_tel: 3.8 # FWHM  in ixels of PSF 
  #which_template: 11
+ template_wavelength: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL-phoenix/WAVE_PHOENIX-ACES-AGSS-COND-2011.fits"
  template_list:
   -
    name: "PAA-01"

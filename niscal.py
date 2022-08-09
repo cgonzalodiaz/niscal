@@ -410,7 +410,46 @@ def read_template(filename):
         flux= np.nan_to_num(error_temp,nan=0) * u.Unit('erg cm-2 s-1 AA-1')) 
     return auxspec, aux_err_spec
 
+def read_GSL_template(filename, wave_array):
+    """Loads a fits file into a Spuntrum1D object
+ 
+    This tool does ....
 
+    Parameters
+    ----------
+    filename : str
+        The name of the fits to read
+
+    Returns
+    -------
+    auxspec
+        A Spectrum1d object of the fits file spectrum
+    wcs_file
+        Word Coord. System information in the fits
+    """        
+    print('    open file ')
+    h_temp = fits.open(filename)
+    #w1_temp = h_temp[0].header['CRVAL1']
+    #disp_temp = 0.6 #h_temp[0].header['CDELT1']
+    #temp_data = fits.getdata(filename, ext=0)
+    #npix_temp = temp_data.shape
+    spec_temp = h_temp[0].data
+    aux_lamb_temp = wave_array  # GSL wavelength in Angstroms
+    #error_temp = h_temp[1].data['ERR']
+    #lamb_temp = h_temp[1].data['WAVE'][0] * 10.0 * u.AA + 
+    # np.arange(len(aux_lamb_temp))  * disp_temp * u.AA 
+    h_temp.close()
+    print('    file closed, create Spectrum1D')
+
+    #w1_temp * u.AA  + np.arange(npix_temp[0]) * disp_temp * u.AA 
+    auxspec = Spectrum1D(
+        spectral_axis= aux_lamb_temp * u.AA,
+        flux= np.nan_to_num(spec_temp,nan=0) * u.Unit('erg cm-2 s-1 cm-1'))
+    #     uncertainty = StdDevUncertainty( np.nan_to_num(error_temp,nan=0))) 
+    #aux_err_spec = Spectrum1D(
+    #    spectral_axis=aux_lamb_temp* u.AA,
+    #    flux= np.nan_to_num(error_temp,nan=0) * u.Unit('erg cm-2 s-1 AA-1')) 
+    return auxspec
 
 def  get_hidro_lines(min_wav_rv,max_wav_rv, DataBase):
     """Read Hidrogen lines
@@ -791,13 +830,17 @@ def get_rv(
         temp_fit = fit_generic_continuum(ds_temp_rv[i], model=mod_rv,
                                      exclude_regions=avoid_lines)
         temp_continuum = temp_fit(new_disp_grid)
-        plot_continuum_fit_Ks(i,ds_telu_rv,de_telu_rv,telu_continuum,ds_temp_rv[i],temp_continuum,avoid_lines, min_wav_rv, max_wav_rv, plot_dirRV)
+        plot_continuum_fit_Ks(
+            i, ds_telu_rv, de_telu_rv, telu_continuum, ds_temp_rv[i],
+            temp_continuum, avoid_lines, min_wav_rv, max_wav_rv, plot_dirRV)
         
         # 3- Normalize the telluric and the template
         temp_norm = ds_temp_rv[i] / temp_continuum
         e_temp_norm = de_temp_rv[i] / temp_continuum
         
-        plot_norm_spec_Ks(i,telu_norm, e_telu_norm, temp_norm,avoid_lines,min_wav_rv, max_wav_rv, plot_dirRV)#,av2,av3,min_wav_rv, max_wav_rv)
+        plot_norm_spec_Ks(
+            i, telu_norm, e_telu_norm, temp_norm, avoid_lines,
+            min_wav_rv, max_wav_rv, plot_dirRV)#,av2,av3,min_wav_rv, max_wav_rv)
         
         # 4- Measure velocity difference
         # Carry out the cross-correlation.
@@ -849,6 +892,140 @@ def get_rv(
         techo1 = nflux1 + nerror1
         floor1 = nflux1 - nerror1
         plt.fill_between(tw, floor1, techo1, facecolor='0.75',edgecolor='0.5')
+        plt.legend()
+        #plt.plot(tw, nflux2, 'g.-')
+        frv.savefig(plot_dirRV+'rv_corrected'+str(i+1)+'.png', dpi=100, bbox_inches='tight')
+    mean_rv= np.mean(rv_out)
+    print("Radial Velocity respect to the templates: ",rv_out)
+    print("Mean Radial velocity shift:           ",mean_rv)
+    return rv_out
+
+
+def get_rv_no_err(
+    s_telu,
+    delta_wav,
+    s_temp, 
+    min_wav_rv,
+    max_wav_rv,
+    n_templ,
+    DataBase):
+    """Read Hidrogen lines
+    
+    Options are: Br, Hu , Pa, Hband, Ksband, Pf, All  
+
+    Parameters
+    ----------
+    filename : str
+        The name of the fits to read
+
+    Returns
+    -------
+    auxspec
+        A Spectrum1d object of the fits file spectrum
+    wcs_file
+        Word Coord. System information in the fits
+    """
+
+    # 2- Get radial velocity of telluric star from the template
+    # FOR ALL THE TEMPLATES
+    # PRINT A TABLE
+    mod_rv=Legendre1D(4)    
+    #delta_wav = w_telu.pixel_scale_matrix[0,0]
+    #delta_wav = w_telu.wcs.cd[0,0]
+    #delta_wav = 2.6
+    new_disp_grid = np.arange(min_wav_rv, max_wav_rv, delta_wav) * u.AA
+    fluxcon = FluxConservingResampler()
+    ds_temp_rv = fluxcon(s_temp, new_disp_grid) 
+    #de_temp_rv = np.sqrt(1.00/ds_temp_rv.uncertainty.array) #fluxcon(error_temp, new_disp_grid)
+
+    ds_telu_rv = fluxcon(s_telu, new_disp_grid)     
+    de_telu_rv = np.sqrt(1.00/ds_telu_rv.uncertainty.array) #fluxcon(er_telu, new_disp_grid)     
+    #####################################################################
+    # Fit the continuum of the telluric and the template
+    # Select the absorption lines to avoid
+    # this will depend on the band.
+    # Needs improvement for all bands
+    avoid_lines = get_hidro_lines(min_wav_rv,max_wav_rv, DataBase)
+    telu_fit = fit_generic_continuum(ds_telu_rv, model=mod_rv,
+                                     exclude_regions=avoid_lines)#,av2,av3])#,av4,av5,av7,av8])
+    ######################################
+    if os.path.isdir('RV_plots'):
+        plot_dirRV = "RV_plots/"
+    else:
+        plot_dirRV = "RV_plots/"
+        os.mkdir("RV_plots") 
+    #####################################################################
+    telu_continuum = telu_fit(new_disp_grid)
+    telu_norm = ds_telu_rv / telu_continuum    
+    e_telu_norm = de_telu_rv / telu_continuum    
+    rv_out = np.zeros(n_templ)
+    print('To Avoid: ',avoid_lines )
+
+    for i in np.arange(len(rv_out)):
+        #print('On the loop.....',s_temp[i])
+        temp_fit = fit_generic_continuum(ds_temp_rv[i], model=mod_rv,
+                                     exclude_regions=avoid_lines)
+        temp_continuum = temp_fit(new_disp_grid)
+        plot_continuum_fit_Ks(
+            i, ds_telu_rv, de_telu_rv, telu_continuum, ds_temp_rv[i],
+            temp_continuum, avoid_lines, min_wav_rv, max_wav_rv, plot_dirRV)
+        
+        # 3- Normalize the telluric and the template
+        temp_norm = ds_temp_rv[i] / temp_continuum
+        
+        plot_norm_spec_Ks(
+            i, telu_norm, e_telu_norm, temp_norm, avoid_lines,
+            min_wav_rv, max_wav_rv, plot_dirRV)#,av2,av3,min_wav_rv, max_wav_rv)
+        
+        # 4- Measure velocity difference
+        # Carry out the cross-correlation.
+        # The RV-range is -130 - +130 km/s in steps of 1 km/s.
+        # The first and last 20 points of the data are skipped.
+        dw = telu_norm.spectral_axis
+        df = telu_norm.flux
+        tw = temp_norm.spectral_axis
+        tf = temp_norm.flux
+        rv, cc = pyasl.crosscorrRV(dw, df, tw, tf, -500., 500., 2, mode='doppler', skipedge=20)
+        # Find the index of maximum cross-correlation function
+        maxind = np.argmax(cc)
+        #print("Cross-correlation function is maximized at dRV = ", rv[maxind], " km/s")
+        #if rv[maxind] > 0.0:
+        #  print("  A red-shift with respect to the template")
+        #else:
+        #  print("  A blue-shift with respect to the template"
+        ######################################
+        # PLOT SPECTRA
+        ######################################
+        frv = plt.gcf()
+        frv.set_size_inches(12,8)
+        rc('font',**{'family':'serif','serif':[' Times New Roman'],'size':'12'})
+        rc('grid',**{'color':'black','linestyle':':','linewidth':'1.2','alpha':'0.5'})
+        rc('text', usetex=True)
+        gsn = gridspec.GridSpec(2, 1)
+        gsn.update(left=0.1, right=0.95,bottom=0.15,top=0.95,hspace=0.3,wspace=0.3)
+        arv1 = plt.subplot(gsn[0:1,0:1])
+
+        arv1.plot(rv, cc, 'b-', label= 'Telluric - Template')
+        plt.title(" Cross-correlation function ")
+        plt.legend()
+        arv1.plot(rv[maxind], cc[maxind], 'ro')
+        arv1.set_xlabel("Radial Velocity (km/s)")
+        arv2 = plt.subplot(gsn[1:2,0:1])
+        #arv1.set_yscale("log")
+        #plt.show()
+        rv_out[i] = rv[maxind] # * u.km / u.s        
+        # 5- Apply RV correction and plot to check
+        # "firstlast" as edge handling method.
+        nflux1, wlprime1 = pyasl.dopplerShift(tw, tf,rv[maxind], edgeHandling="firstlast")
+        #nerror1, wlprime1 = pyasl.dopplerShift(tw, te,rv[maxind], edgeHandling="firstlast")
+        # Plot the outcome
+        arv2.plot(dw, df, 'b-', label= 'Telluric spectrum')
+        arv2.plot(tw, nflux1, 'r:',label='Shifted template')
+        arv2.axis([min_wav_rv, max_wav_rv, 0.6, 1.2])         
+        plt.title("Normalized Spectra")    
+        #techo1 = nflux1 + nerror1
+        #floor1 = nflux1 - nerror1
+        #plt.fill_between(tw, floor1, techo1, facecolor='0.75',edgecolor='0.5')
         plt.legend()
         #plt.plot(tw, nflux2, 'g.-')
         frv.savefig(plot_dirRV+'rv_corrected'+str(i+1)+'.png', dpi=100, bbox_inches='tight')
@@ -918,19 +1095,20 @@ def get_tell_cor(vshift, telluric, w_telu, template, in_config, wi):
     
     # Shift template in radial velocity      
     rv_s_temp_flux_1, rv_s_temp_w = pyasl.dopplerShift(template.spectral_axis, template.flux, vshift, edgeHandling="firstlast")
-    rvs_temp = Spectrum1D(spectral_axis=template.spectral_axis, flux=rv_s_temp_flux_1* u.Unit('erg cm-2 s-1 AA-1')) 
+    rvs_temp = Spectrum1D(spectral_axis=template.spectral_axis, flux=rv_s_temp_flux_1* u.Unit('erg cm-2 s-1 cm-1')) 
     ######################################
     #  Resample template and  telluric star's spectrum
     # Copy the region of interest from the telluric star and the templates.
     #delt_wav_tel = w_telu.wcs.cd[0,0]
-    new_disp_grid = np.arange(minwav, maxwav, 2.6) * u.AA
+    new_disp_grid = telluric.spectral_axis 
+    #np.arange(minwav, maxwav, 2.6) * u.AA
     
     fluxcon = FluxConservingResampler()
     ds_temp = fluxcon(rvs_temp, new_disp_grid) 
-    ds_telu = fluxcon(telluric, new_disp_grid) 
+    #ds_telu = fluxcon(telluric, new_disp_grid) 
     ########
     temp_scale_flux = ds_temp.flux.value[np.where(abs(ds_temp.spectral_axis.value - scale_wav) < 1.35)]
-    telu_scale_flux = ds_telu.flux.value[np.where(abs(ds_telu.spectral_axis.value - scale_wav) < 1.35)]
+    telu_scale_flux = telluric.flux.value[np.where(abs(telluric.spectral_axis.value - scale_wav) < 1.35)]
     print('template flux scale : ',temp_scale_flux)
     print('telluric flux scale : ',telu_scale_flux)
     scale_factor_temp =  telu_scale_flux / temp_scale_flux 
@@ -938,9 +1116,9 @@ def get_tell_cor(vshift, telluric, w_telu, template, in_config, wi):
     ######################################
     # Calculate differences and corrections
     ######################################
-    s_difference = ds_telu - ds_temp * scale_factor_temp 
+    s_difference = telluric - ds_temp * scale_factor_temp 
     ######################################
-    s_ratio = ds_telu / (ds_temp * scale_factor_temp) 
+    s_ratio = telluric / (ds_temp * scale_factor_temp) 
     ######################################
     # update WCS
     #w_telu.wcs.crval[0] = minwav
@@ -977,7 +1155,7 @@ def get_tell_cor(vshift, telluric, w_telu, template, in_config, wi):
     axc2 = plt.subplot(gsc[1:2,0:1])
     axc3 = plt.subplot(gsc[2:3,0:1])
     kk = fco.sca(axc1)     
-    axc1.step(ds_telu.spectral_axis, ds_telu.flux.value ,color='k', linestyle='-',label='Telluric Star') 
+    axc1.step(telluric.spectral_axis, telluric.flux.value ,color='k', linestyle='-',label='Telluric Star') 
     axc1.step(ds_temp.spectral_axis, ds_temp.flux.value * scale_factor_temp  ,color='g', linestyle='-',label='Template Star '+tempname) 
     axc1.axvline(scale_wav, color='g', linestyle=':',label='Scaling Wavelength')
     axc1.axvline(min_wav_q, color='r', linestyle='--',label='Quality assesement region')   
@@ -1006,7 +1184,6 @@ def get_tell_cor(vshift, telluric, w_telu, template, in_config, wi):
     kk = fco.sca(axc3)     
     axc3.step(s_ratio.spectral_axis, s_ratio.flux.value ,color='k', linestyle='-',label='Telluric / Template') 
    
-     
     #roof4= s_error_ratio_plu.flux 
     #floor4= s_error_ratio_min.flux 
     #plt.fill_between(s_ratio.spectral_axis.value, floor4, roof4 , facecolor='0.75',edgecolor='b')
@@ -1022,9 +1199,12 @@ def get_tell_cor(vshift, telluric, w_telu, template, in_config, wi):
     plt.title("Ratio")
     plt.legend()
     fco.savefig(plot_dir+'telluric_correction_'+str(wi+1)+'.png', dpi=150, bbox_inches='tight')
-    return new_disp_grid, q_stats, ds_telu, s_difference, s_ratio
+    return q_stats, s_difference, s_ratio
 
-def apply_tell_cor(s_science, s_telu, tes_rat, which_wav_scale, new_disp_grid):
+def apply_tell_cor(
+    s_science, 
+    s_telu, 
+    tes_rat, which_wav_scale, new_disp_grid):
     """Read Hidrogen lines
     
     Options are: Br, Hu , Pa, Hband, Ksband, Pf, All  
@@ -1134,7 +1314,7 @@ def apply_tell_cor(s_science, s_telu, tes_rat, which_wav_scale, new_disp_grid):
     fsc.savefig('Tel_corrected_science.png', dpi=150, bbox_inches='tight')
     return tcor_sci, tcor_telu
  
-def load_templates(
+def load_XSL_templates(
     in_config,
     new_disp_grid):
     """Re-samples a list of spectra on the same dispersion axis 
@@ -1159,6 +1339,7 @@ def load_templates(
     template_fluxes = np.zeros((len(in_config["template_list"]), len(new_disp_grid)))
     template_err = np.zeros((len(in_config["template_list"]), len(new_disp_grid)))
     
+
     for ii in np.arange(len(in_config["template_list"])):
         n_template = in_config["template_list"][ii]["fits"]
         s_temp, e_temp = read_template(n_template)
@@ -1172,6 +1353,57 @@ def load_templates(
     err_templates = Spectrum1D(spectral_axis=de_temp.spectral_axis,flux=template_err * u.Unit('erg cm-2 s-1 AA-1'))
     
     return flux_templates, err_templates
+
+
+def load_GSL_templates(
+    in_config,
+    new_disp_grid):
+    """Re-samples a list of spectra on the same dispersion axis 
+    
+    This tool ....
+    
+    Parameters
+    ----------
+    in_config : str
+        The configuration file with a list of templates 
+        and spectral type
+    new_disp_grid :  
+    
+    Returns
+    -------
+    flux_templates
+        A Spectrum1d object o...
+    """
+
+    # No error spectra is provided for this library.
+
+    # Read a list of template fluxes without knowing how big the list is.
+    template_fluxes = np.zeros((len(in_config["template_list"]), len(new_disp_grid)))
+    #template_err = np.zeros((len(in_config["template_list"]), len(new_disp_grid)))
+    
+    # Reads wavelength file in Angstroms
+    h_wav = fits.open(in_config["template_wavelength"])
+    wav_array = h_wav[0].data 
+
+    for ii in np.arange(len(in_config["template_list"])):
+        n_template = in_config["template_list"][ii]["fits"]
+        print(' Loading : ', n_template)
+        s_temp = read_GSL_template(n_template, wav_array)
+        print(' Slicing  ')
+        print('      from : ', new_disp_grid[0])
+        print('        to : ', new_disp_grid[-1])
+        s_temp_slice = s_temp[new_disp_grid[0]:new_disp_grid[-1]]
+
+        print(' Resampling : ', n_template)
+        fluxcon = FluxConservingResampler()
+        #ds_temp = fluxcon(s_temp_slice, new_disp_grid) 
+        #de_temp = fluxcon(e_temp, new_disp_grid) 
+        template_fluxes[ii] = ds_temp.flux.value #* u.Unit('erg cm-2 s-1 AA-1')
+        #template_err[ii] = de_temp.flux.value #* u.Unit('erg cm-2 s-1 AA-1')
+        
+    flux_templates = Spectrum1D(spectral_axis=ds_temp.spectral_axis,flux=template_fluxes * u.Unit('erg cm-2 s-1 cm-1'))
+    #err_templates = Spectrum1D(spectral_axis=de_temp.spectral_axis,flux=template_err * u.Unit('erg cm-2 s-1 AA-1'))
+    return flux_templates
 
 def mag2flux_2mass(m_in,er_m_in,ref_wav,DataBase):
     """Read Hidrogen lines
@@ -1533,27 +1765,34 @@ def find_best_template(in_config, DataBase):
     ds_scie = fluxcon(s_scie, sci_disp_grid)
     ds_telu = fluxcon(s_telu, sci_disp_grid)    
     # 2 - Read templates from a list without knowing how big the list is.
-    ntemplates = len(in_config["template_list"])
-    df_temp, de_temp = load_templates(in_config,sci_disp_grid) 
-    
+    ntemplates = len(in_config["template_list"])    
+    print(' Loading templates ')
+    # For XSL templates (observed):
+    # df_temp, de_temp = load_XSL_templates(in_config,sci_disp_grid) 
+    # For GSL templates (synthetic), no error provided in the library:
+    df_temp = load_GSL_templates(in_config, sci_disp_grid) 
+    print(' Number of templates Loaded : ', ntemplates)
     #df_temp = fluxcon(f_temp, new_disp_grid)
     #de_temp = fluxcon(e_temp, new_disp_grid)
     #de_temp = np.sqrt(1.00/ds_temp.uncertainty.array)
-
     
     if "rvspeed" in in_config:
         rad_vel = np.zeros(ntemplates) + in_config['rvspeed']
         vshift = in_config['rvspeed']
-        print(' Radial velocity provided!' )
+        print(' Radial velocity provided: ', vshift)
     else:
         # Show region for RV calculation
         print(' Calculating radial velocity!' )
         show_region_rv(ds_telu,df_temp[0], in_config, DataBase)
         ######################################
         # 3 - Get radial velocity of telluric star from the templates
-        rad_vel = get_rv(ds_telu,wcs_telu,df_temp,de_temp,
-                         in_config["rvwavmin"], in_config["rvwavmax"],ntemplates, DataBase)
+        #rad_vel = get_rv(ds_telu,wcs_telu,df_temp,de_temp,
+        #                 in_config["rvwavmin"], in_config["rvwavmax"],ntemplates, DataBase)
+        rad_vel = get_rv_no_err(ds_telu, delta_wav, df_temp,
+                         in_config["rvwavmin"], in_config["rvwavmax"],
+                         ntemplates, DataBase)
         vshift =np.mean(rad_vel)
+        print(' Mean radial velocity: ', vshift)
         ######################################
     with open("NISCAL_log.txt", "w") as flog:
             print("# Index Name      Template   ST    Wscale   Vrad  Wmin  Wmax  q_min q_max q_stdev q_skew q_kurt", file=flog)    
@@ -1565,10 +1804,8 @@ def find_best_template(in_config, DataBase):
             # resample template to match telluric star's spectrum
             # PLOT -  templates, ratios and difference with the telluric
             
-            disp_grid_i, quality_stats, spec_telu_i, spec_dif_i, spec_rat_i = get_tell_cor(rad_vel[ii], 
-                                                                                    ds_telu, wcs_telu, 
-                                                                                    df_temp[ii], 
-                                                                                    in_config, ii)
+            quality_stats, spec_dif_i, spec_rat_i = get_tell_cor(
+                rad_vel[ii],ds_telu, wcs_telu, df_temp[ii], in_config, ii)
             print(ii+1, in_config["name_tel"],in_config["template_list"][ii]["name"],
                   in_config["template_list"][ii]["sp_type"],
                   in_config["which_wav_scale"],rad_vel[ii],in_config["min_wav_q"],
@@ -1580,8 +1817,8 @@ def find_best_template(in_config, DataBase):
                 stdev_control = quality_stats[2] 
                 final_tel_correction = spec_rat_i
                 final_tel_diff = spec_dif_i
-                final_disp = disp_grid_i
-                final_spec_telu = spec_telu_i
+                #final_disp = disp_grid_i
+                #final_spec_telu = spec_telu_i
                 final_template = ii
             #------------------------------------
             # TO FIND BEST TEMPLATE:
@@ -1591,15 +1828,15 @@ def find_best_template(in_config, DataBase):
             # wavelength region of the difference spectrum.
             # ######
     small_dis_temp = plot_quality("NISCAL_log.txt")
-    disp_grid_i, quality_stats, spec_telu_i, spec_dif_i, spec_rat_i = get_tell_cor(rad_vel[small_dis_temp], 
-                                                                                    ds_telu, wcs_telu, 
-                                                                                    df_temp[small_dis_temp], 
-                                                                                    in_config, small_dis_temp)
+    quality_stats, spec_dif_i, spec_rat_i = get_tell_cor(
+        rad_vel[small_dis_temp], ds_telu, wcs_telu, df_temp[small_dis_temp],
+        in_config, small_dis_temp)
+
     stdev_control = quality_stats[2] 
     final_tel_correction = spec_rat_i
     final_tel_diff = spec_dif_i
-    final_disp = disp_grid_i
-    final_spec_telu = spec_telu_i
+    #final_disp = disp_grid_i
+    #final_spec_telu = spec_telu_i
     final_template = small_dis_temp
     """
     FROM IRAF nsextract:
@@ -1623,7 +1860,9 @@ def find_best_template(in_config, DataBase):
     # [7 y 8] : the errors in the ratio
     ######################################
     # Apply telluric correction to the science spectrum
-    tcor_sci, tcor_telu = apply_tell_cor(ds_scie,final_spec_telu,final_tel_correction, in_config["which_wav_scale"], final_disp)
+    tcor_sci, tcor_telu = apply_tell_cor(
+        ds_scie, ds_telu, final_tel_correction, in_config["which_wav_scale"],
+        sci_disp_grid)
     return final_template, tcor_sci, tcor_telu, final_tel_correction, final_tel_diff
 
 def get_exp_time(filename):
@@ -1991,7 +2230,7 @@ def niscal():
     DataBase='/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/database/'
     # Working directory containing. Input data is expected here. 
     wdir= in_config["wdir"] 
-    os.chdir(wdir)   
+    os.chdir(wdir)
     # =================================================================
     # 1 - Telluric correction. 
     # If you know the template just go get it.
