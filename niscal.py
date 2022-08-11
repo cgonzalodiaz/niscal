@@ -70,7 +70,7 @@ from astropy.convolution import Gaussian2DKernel
 from astropy.modeling.models import Lorentz1D
 from astropy.modeling.functional_models import Box2D
 from astropy.convolution import convolve_fft
-from astropy.modeling.polynomial import Chebyshev1D, Legendre1D
+from astropy.modeling.polynomial import Polynomial1D, Legendre1D
 from astropy.modeling.fitting import LevMarLSQFitter
 from specutils.manipulation import extract_region
 from specutils.io.registers import custom_writer
@@ -172,16 +172,16 @@ def plot_continuum_fit_Ks(
     #roof1=(de_temp.flux+ds_temp.flux)/ds_temp.flux[1]
     #floor1=(ds_temp.flux-de_temp.flux)/ds_temp.flux[1]
 
-    ax22.step(ds_temp.spectral_axis, ds_temp.flux/ds_temp.flux[1], 
+    ax22.step(ds_temp.spectral_axis, ds_temp.flux, #/ds_temp.flux[1], 
     color='b', linestyle='-',label='Template spectrum') 
     #plt.fill_between(de_temp.spectral_axis.value, floor1, roof1, 
     # facecolor='0.75',edgecolor='0.5')
-    ax22.step(ds_temp.spectral_axis, temp_continuum/ds_temp.flux[1],
+    ax22.step(ds_temp.spectral_axis, temp_continuum, #/ds_temp.flux[1],
     color='g', linestyle='--',label='Template continuum') 
     for jj in np.arange(len(av1)):    
         #av1_spectrum = extract_region(ds_telu, av1[jj])
         av1_temp = extract_region(ds_temp, av1[jj])
-        ax22.step(av1_temp.spectral_axis, av1_temp.flux/ds_temp.flux[1],
+        ax22.step(av1_temp.spectral_axis, av1_temp.flux, #/ds_temp.flux[1],
         color='r', linestyle=':') #,label='Excluded region') 
     plt.ylabel("Arbitrary scale")
     #ax22.step(av2_temp.spectral_axis, av2_temp.flux/ds_temp.flux[1],
@@ -410,7 +410,7 @@ def read_template(filename):
         flux= np.nan_to_num(error_temp,nan=0) * u.Unit('erg cm-2 s-1 AA-1')) 
     return auxspec, aux_err_spec
 
-def read_GSL_template(filename, wave_array):
+def read_GSL_template(filename):
     """Loads a fits file into a Spuntrum1D object
  
     This tool does ....
@@ -426,29 +426,31 @@ def read_GSL_template(filename, wave_array):
         A Spectrum1d object of the fits file spectrum
     wcs_file
         Word Coord. System information in the fits
-    """        
-    print('    open file ')
+    """
+        
+    #print('    open file ')
     h_temp = fits.open(filename)
     #w1_temp = h_temp[0].header['CRVAL1']
     #disp_temp = 0.6 #h_temp[0].header['CDELT1']
     #temp_data = fits.getdata(filename, ext=0)
     #npix_temp = temp_data.shape
-    spec_temp = h_temp[0].data
-    aux_lamb_temp = wave_array  # GSL wavelength in Angstroms
+    spec_temp = h_temp[1].data['flux'] 
+    aux_lamb_temp = h_temp[1].data['wavelength']
+    #wave_array  # GSL wavelength in Angstroms
     #error_temp = h_temp[1].data['ERR']
     #lamb_temp = h_temp[1].data['WAVE'][0] * 10.0 * u.AA + 
     # np.arange(len(aux_lamb_temp))  * disp_temp * u.AA 
     h_temp.close()
-    print('    file closed, create Spectrum1D')
-
+    #print('    file closed, create Spectrum1D')
     #w1_temp * u.AA  + np.arange(npix_temp[0]) * disp_temp * u.AA 
     auxspec = Spectrum1D(
         spectral_axis= aux_lamb_temp * u.AA,
-        flux= np.nan_to_num(spec_temp,nan=0) * u.Unit('erg cm-2 s-1 cm-1'))
+        flux= np.nan_to_num(spec_temp,nan=0) * u.Unit('erg cm-2 s-1 AA-1'))
     #     uncertainty = StdDevUncertainty( np.nan_to_num(error_temp,nan=0))) 
     #aux_err_spec = Spectrum1D(
     #    spectral_axis=aux_lamb_temp* u.AA,
     #    flux= np.nan_to_num(error_temp,nan=0) * u.Unit('erg cm-2 s-1 AA-1')) 
+    #auxspec = Spectrum1D.read(filename,format='tabular-fits')
     return auxspec
 
 def  get_hidro_lines(min_wav_rv,max_wav_rv, DataBase):
@@ -929,13 +931,14 @@ def get_rv_no_err(
     # 2- Get radial velocity of telluric star from the template
     # FOR ALL THE TEMPLATES
     # PRINT A TABLE
-    mod_rv=Legendre1D(4)    
     #delta_wav = w_telu.pixel_scale_matrix[0,0]
     #delta_wav = w_telu.wcs.cd[0,0]
     #delta_wav = 2.6
     new_disp_grid = np.arange(min_wav_rv, max_wav_rv, delta_wav) * u.AA
     fluxcon = FluxConservingResampler()
-    ds_temp_rv = fluxcon(s_temp, new_disp_grid) 
+    linear = LinearInterpolatedResampler()
+    spline = SplineInterpolatedResampler()
+    #ds_temp_rv = spline(s_temp, new_disp_grid) 
     #de_temp_rv = np.sqrt(1.00/ds_temp_rv.uncertainty.array) #fluxcon(error_temp, new_disp_grid)
 
     ds_telu_rv = fluxcon(s_telu, new_disp_grid)     
@@ -945,7 +948,8 @@ def get_rv_no_err(
     # Select the absorption lines to avoid
     # this will depend on the band.
     # Needs improvement for all bands
-    avoid_lines = get_hidro_lines(min_wav_rv,max_wav_rv, DataBase)
+    avoid_lines = get_hidro_lines(min_wav_rv, max_wav_rv, DataBase)
+    mod_rv=Legendre1D(4)    
     telu_fit = fit_generic_continuum(ds_telu_rv, model=mod_rv,
                                      exclude_regions=avoid_lines)#,av2,av3])#,av4,av5,av7,av8])
     ######################################
@@ -956,22 +960,34 @@ def get_rv_no_err(
         os.mkdir("RV_plots") 
     #####################################################################
     telu_continuum = telu_fit(new_disp_grid)
+    #print('telluric ',ds_telu_rv)
+    #print('   ERROR   ',de_telu_rv)
+    #print('continuum',telu_continuum)
+
     telu_norm = ds_telu_rv / telu_continuum    
     e_telu_norm = de_telu_rv / telu_continuum    
     rv_out = np.zeros(n_templ)
     print('To Avoid: ',avoid_lines )
+    mod_temp=Polynomial1D(3)
+    #Legendre1D(4)    
 
     for i in np.arange(len(rv_out)):
         #print('On the loop.....',s_temp[i])
-        temp_fit = fit_generic_continuum(ds_temp_rv[i], model=mod_rv,
-                                     exclude_regions=avoid_lines)
+        #print('before resample ',s_temp[i])
+        ds_temp_rv = fluxcon(s_temp[i], new_disp_grid) 
+        #print('after resample template ',ds_temp_rv)
+        temp_fit = fit_generic_continuum(ds_temp_rv) #, model=mod_temp,
+                                     #exclude_regions=avoid_lines)
+
         temp_continuum = temp_fit(new_disp_grid)
+        #print('template ',ds_temp_rv)
+        #print('continuum',temp_continuum)
         plot_continuum_fit_Ks(
-            i, ds_telu_rv, de_telu_rv, telu_continuum, ds_temp_rv[i],
+            i, ds_telu_rv, de_telu_rv, telu_continuum, ds_temp_rv,
             temp_continuum, avoid_lines, min_wav_rv, max_wav_rv, plot_dirRV)
         
         # 3- Normalize the telluric and the template
-        temp_norm = ds_temp_rv[i] / temp_continuum
+        temp_norm = ds_temp_rv / temp_continuum
         
         plot_norm_spec_Ks(
             i, telu_norm, e_telu_norm, temp_norm, avoid_lines,
@@ -1029,7 +1045,7 @@ def get_rv_no_err(
         plt.legend()
         #plt.plot(tw, nflux2, 'g.-')
         frv.savefig(plot_dirRV+'rv_corrected'+str(i+1)+'.png', dpi=100, bbox_inches='tight')
-    mean_rv= np.mean(rv_out)
+    mean_rv= 200 #np.mean(rv_out)
     print("Radial Velocity respect to the templates: ",rv_out)
     print("Mean Radial velocity shift:           ",mean_rv)
     return rv_out
@@ -1382,26 +1398,28 @@ def load_GSL_templates(
     #template_err = np.zeros((len(in_config["template_list"]), len(new_disp_grid)))
     
     # Reads wavelength file in Angstroms
-    h_wav = fits.open(in_config["template_wavelength"])
-    wav_array = h_wav[0].data 
+    #h_wav = fits.open(in_config["template_wavelength"])
+    #wav_array = h_wav[0].data 
 
     for ii in np.arange(len(in_config["template_list"])):
         n_template = in_config["template_list"][ii]["fits"]
         print(' Loading : ', n_template)
-        s_temp = read_GSL_template(n_template, wav_array)
-        print(' Slicing  ')
-        print('      from : ', new_disp_grid[0])
-        print('        to : ', new_disp_grid[-1])
-        s_temp_slice = s_temp[new_disp_grid[0]:new_disp_grid[-1]]
-
+        s_temp = read_GSL_template(n_template)
+        #print(' Slicing  ')
+        #print('      from : ', new_disp_grid[0])
+        #print('        to : ', new_disp_grid[-1])
+        #s_temp_slice = s_temp[new_disp_grid[0]:new_disp_grid[-1]]
+        print('before resample ',s_temp)
         print(' Resampling : ', n_template)
         fluxcon = FluxConservingResampler()
-        #ds_temp = fluxcon(s_temp_slice, new_disp_grid) 
+        #linear = LinearInterpolatedResampler()
+        ds_temp = fluxcon(s_temp, new_disp_grid) 
+        print('after resample ',ds_temp)
         #de_temp = fluxcon(e_temp, new_disp_grid) 
         template_fluxes[ii] = ds_temp.flux.value #* u.Unit('erg cm-2 s-1 AA-1')
         #template_err[ii] = de_temp.flux.value #* u.Unit('erg cm-2 s-1 AA-1')
-        
-    flux_templates = Spectrum1D(spectral_axis=ds_temp.spectral_axis,flux=template_fluxes * u.Unit('erg cm-2 s-1 cm-1'))
+    print(' Saving new dispersion templates ')
+    flux_templates = Spectrum1D(spectral_axis=ds_temp.spectral_axis,flux=np.nan_to_num(template_fluxes,nan=0) * u.Unit('erg cm-2 s-1 AA-1'))
     #err_templates = Spectrum1D(spectral_axis=de_temp.spectral_axis,flux=template_err * u.Unit('erg cm-2 s-1 AA-1'))
     return flux_templates
 
@@ -1764,6 +1782,7 @@ def find_best_template(in_config, DataBase):
     fluxcon = FluxConservingResampler()
     ds_scie = fluxcon(s_scie, sci_disp_grid)
     ds_telu = fluxcon(s_telu, sci_disp_grid)    
+    #print(ds_telu)
     # 2 - Read templates from a list without knowing how big the list is.
     ntemplates = len(in_config["template_list"])    
     print(' Loading templates ')
@@ -1783,7 +1802,7 @@ def find_best_template(in_config, DataBase):
     else:
         # Show region for RV calculation
         print(' Calculating radial velocity!' )
-        show_region_rv(ds_telu,df_temp[0], in_config, DataBase)
+        #show_region_rv(ds_telu,df_temp[10], in_config, DataBase)
         ######################################
         # 3 - Get radial velocity of telluric star from the templates
         #rad_vel = get_rv(ds_telu,wcs_telu,df_temp,de_temp,
@@ -1793,7 +1812,8 @@ def find_best_template(in_config, DataBase):
                          ntemplates, DataBase)
         vshift =np.mean(rad_vel)
         print(' Mean radial velocity: ', vshift)
-        ######################################
+
+    ######################################
     with open("NISCAL_log.txt", "w") as flog:
             print("# Index Name      Template   ST    Wscale   Vrad  Wmin  Wmax  q_min q_max q_stdev q_skew q_kurt", file=flog)    
     with open("NISCAL_log.txt", "a") as flog:
@@ -1860,11 +1880,13 @@ def find_best_template(in_config, DataBase):
     # [7 y 8] : the errors in the ratio
     ######################################
     # Apply telluric correction to the science spectrum
+    """
     tcor_sci, tcor_telu = apply_tell_cor(
         ds_scie, ds_telu, final_tel_correction, in_config["which_wav_scale"],
         sci_disp_grid)
     return final_template, tcor_sci, tcor_telu, final_tel_correction, final_tel_diff
-
+    """
+    
 def get_exp_time(filename):
     """Read Hidrogen lines
     
@@ -1882,7 +1904,6 @@ def get_exp_time(filename):
     wcs_file
         Word Coord. System information in the fits
     """
-
     h_some = fits.open(filename)
     #wcs_sci = wcs.WCS(h_telu[('sci',1)].header,h_telu)
     exptime = h_some[1].header['EXPTIME']
@@ -2242,11 +2263,15 @@ def niscal():
     # If not, find me the best template:
     else:
         print('Finding the best template for you!')
+        find_best_template(in_config, DataBase)
+
+        """
         best_template, tcor_science, tcor_telluric, spec_rat, \
             spec_dif = find_best_template(in_config, DataBase)
         print(
             'Your best option is Template ', best_template+1, \
                 ':', in_config["template_list"][best_template]["name"] )
+        """
     # =====================================================================
     # 2 - Flux calibration
     if in_config["fluxing"]:
@@ -2301,6 +2326,7 @@ def niscal():
     # =====================================================================
     # # Write fits files:
     #  1- Telluric calibrated science and error
+    """
     print('Telluric calibrated science and error')
     tc_science_out = in_config[
         "name_sci"] + "_tc_" + in_config[
@@ -2313,6 +2339,7 @@ def niscal():
         "template_list"][best_template]["sp_type"] + ".fits"
     generic_fits(
         spec_rat,telluric_cor_out)
+    """
     print('The End')
 
 if __name__ == "__main__":
