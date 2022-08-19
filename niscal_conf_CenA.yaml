@@ -8,7 +8,7 @@
  which_wav_scale: 21150.0 
  minwav: 19200.0 
  maxwav: 24400.0 
- #rvspeed: 88.0  
+ rvspeed: 98.0  
  rvwavmin: 20900.0 
  rvwavmax: 24000.0 
  min_wav_q: 21560   
@@ -24,12 +24,8 @@
  #slitloss_tel: 1.07  #some percent of light loss
  #fwhm_sci: 3.6 # FWHM  in pixels of PSF 
  #fwhm_tel: 3.8 # FWHM  in ixels of PSF 
- #which_template: 11
+ which_template: 10
  template_list:
-  -
-   name: "PAA-01"
-   sp_type: "t2m3" 
-   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL_med_res/new_lte02300-0.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
   -
    name: "PAA-02"
    sp_type: "t3m" 
@@ -39,25 +35,13 @@
    sp_type: "t4m" 
    fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL_med_res/new_lte04000-4.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
   -
-   name: "PAA-05"
-   sp_type: "t4m5" 
-   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL_med_res/new_lte04500-4.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
-  -
    name: "PAA-06"
    sp_type: "t5m" 
    fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL_med_res/new_lte05000-4.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
   -
-   name: "PAA-07"
-   sp_type: "t5m5" 
-   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL_med_res/new_lte05500-4.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
-  -
    name: "PAA-08"
    sp_type: "t6m" 
    fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL_med_res/new_lte06000-4.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
-  -
-   name: "PAA-09"
-   sp_type: "t6m5" 
-   fits: "/media/gonza/colosus/Proyecto_AGN_OCSVM/Codigos/niscal/templates/GSL_med_res/new_lte06500-4.00-0.0.PHOENIX-ACES-AGSS-COND-2011-HiRes.fits"
   -
    name: "PAA-10"
    sp_type: "t7m" 
